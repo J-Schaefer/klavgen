@@ -3,15 +3,17 @@ from klavgen.classes import Key
 
 import cadquery as cq
 
-config = Config(case_config=CaseConfig(
-        side_fillet=4,
-        palm_rests_top_fillet=5,
-        switch_type=SwitchType.MX,
+config = Config(
+    case_config=CaseConfig(
+        # side_fillet=4,
+        # palm_rests_top_fillet=5,
+        # switch_type=SwitchType.MX
+        case_thickness=2
     ),
     mx_key_config=MXKeyConfig(case_tile_margin=7.5),
-    choc_key_config=ChocKeyConfig(case_tile_margin=7.6),
-    controller_config=ControllerConfig(case_tile_margin=5),
-    usbc_jack_config=USBCJackConfig(case_tile_margin=5),
+    # choc_key_config=ChocKeyConfig(case_tile_margin=7.6),
+    # controller_config=ControllerConfig(case_tile_margin=5),
+    # usbc_jack_config=USBCJackConfig(case_tile_margin=5)
 )
 
 keys : Key = generate_keys_from_kle_json("./keyboard-layout.json")
@@ -20,27 +22,24 @@ key: Key
 for key in keys:
     print(key)
 
-controller = Controller(x=47.5, y=34)
+controller = Controller(x=47.5, y=20)
 
 screw_holes = [  # Clockwise from top left
-    ScrewHole(x=-11.4, y=30.4),
-    ScrewHole(x=30.5, y=30.4),
-    ScrewHole(x=78.4, y=30.4),
-    ScrewHole(x=78.4, y=9.5),
-    ScrewHole(x=30.5, y=-15),
-    ScrewHole(x=-11.5, y=-15),
+    ScrewHole(x=-11.4, y=10),
+    ScrewHole(x=67.15, y=10),
+    ScrewHole(x=28.575, y=-28.575),
+    ScrewHole(x=28.575, y=-47.625),
+    ScrewHole(x=-11.5, y=-85.2),
+    ScrewHole(x=67.15, y=-85.2),
 ]
 
 patches = [
     Patch(
         points=[
-            (-15, 34),
-            (82, 34),
-            (82, 7),
-            (57.5, -15),
-            (30.5, -15),
-            (9.5, -18),
-            (-15, -15),
+            (-15, 15),
+            (60, 15),
+            (60, -90),
+            (-15, -90),
         ],
         height=config.case_config.case_base_height,
     )
@@ -65,9 +64,10 @@ case_extras = [
 
 
 render_and_save_keyboard(keys=keys,
+                         config=config,
                          controller=controller,
                          patches=patches,
-                         cuts=cuts,
-                         case_extras=case_extras,
+                        #  cuts=cuts,
+                        #  case_extras=case_extras,
                          screw_holes=screw_holes
                          )
