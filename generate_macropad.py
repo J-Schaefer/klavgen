@@ -7,8 +7,8 @@ config = Config(
     case_config=CaseConfig(
         # side_fillet=4,
         # palm_rests_top_fillet=5,
-        # switch_type=SwitchType.MX
-        case_thickness=2
+        switch_type=SwitchType.MX,
+        case_base_height=13
     ),
     mx_key_config=MXKeyConfig(case_tile_margin=7.5),
     # choc_key_config=ChocKeyConfig(case_tile_margin=7.6),
@@ -25,12 +25,12 @@ for key in keys:
 controller = Controller(x=47.5, y=20)
 
 screw_holes = [  # Clockwise from top left
-    ScrewHole(x=-11.4, y=10),
-    ScrewHole(x=67.15, y=10),
-    ScrewHole(x=28.575, y=-28.575),
-    ScrewHole(x=28.575, y=-47.625),
-    ScrewHole(x=-11.5, y=-85.2),
-    ScrewHole(x=67.15, y=-85.2),
+    ScrewHole(x=-11.4, y=11.0),
+    ScrewHole(x=68.15, y=11.0),
+    ScrewHole(x=28.575, y=-28.25),
+    ScrewHole(x=28.575, y=-47.05),
+    ScrewHole(x=-11.5, y=-87.2),
+    ScrewHole(x=68.15, y=-87.2),
 ]
 
 patches = [
