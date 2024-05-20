@@ -29,14 +29,23 @@ def render_usbc_jack(usbc_jack: USBCJack, config: Config) -> RenderResult:
 
         return position(usbc_jack_holder, usbc_jack_lr)
 
-    return RenderResult(
-        name=usbc_jack.name or "usbc_jack",
+    if config.usbc_jack_config.inner_structure:
+        items=[
+            RenderedItem(result.case_column, pipeline_stage=RenderingPipelineStage.CASE_SOLID),
+            RenderedItem(result.rail, pipeline_stage=RenderingPipelineStage.AFTER_SHELL_ADDITIONS),
+            RenderedItem(result.debug, pipeline_stage=RenderingPipelineStage.DEBUG),
+        ]
+    else:
         items=[
             RenderedItem(result.case_column, pipeline_stage=RenderingPipelineStage.CASE_SOLID),
             RenderedItem(result.rail, pipeline_stage=RenderingPipelineStage.AFTER_SHELL_ADDITIONS),
             RenderedItem(result.hole, pipeline_stage=RenderingPipelineStage.BOTTOM_CUTS),
             RenderedItem(result.debug, pipeline_stage=RenderingPipelineStage.DEBUG),
-        ],
+        ]
+
+    return RenderResult(
+        name=usbc_jack.name or "usbc_jack",
+        items=items,
         separate_components=[
             SeparateComponentRender(
                 name="usbc_jack_holder",

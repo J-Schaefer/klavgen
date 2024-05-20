@@ -685,6 +685,8 @@ class ControllerConfig(SideHolderConfig):
     usb_port_hole_start_height_from_pcb_bottom: float = 1.2
     usb_port_hole_width: float = 9.0  # 10.0 usbc / 9.0 microusb
 
+    inner_structure: bool = False
+
 
 @dataclass
 class TrrsJackConfig(SideHolderConfig):
@@ -707,6 +709,8 @@ class TrrsJackConfig(SideHolderConfig):
     holder_back_hole_depth: float = 1.0
     holder_back_hole_radius: float = 2
 
+    inner_structure: bool = False
+
 
 @dataclass
 class USBCJackConfig(SideHolderConfig):
@@ -721,6 +725,8 @@ class USBCJackConfig(SideHolderConfig):
     base_height: float = 1.8
 
     jack_height: float = 3.6
+
+    inner_structure: bool = False
 
 
 @dataclass

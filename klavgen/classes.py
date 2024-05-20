@@ -78,6 +78,13 @@ class RenderedSideHolder:
 
 
 @dataclass
+class RenderedInnerSideHolder:
+    case_column: Any
+    rail: Any
+    debug: Any
+
+
+@dataclass
 class Controller(LocationOrientation):
     pass
 

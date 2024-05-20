@@ -1,6 +1,6 @@
 import cadquery as cq
 
-from .classes import LocationOrientation, RenderedSideHolder
+from .classes import LocationOrientation, RenderedSideHolder, RenderedInnerSideHolder
 from .config import CaseConfig, Config, SideHolderConfig
 from .utils import create_workplane, grow_yz
 
@@ -26,21 +26,22 @@ def render_side_case_hole_rail(
         )
     )
 
-    # Case hole
-    hole = (
-        base_wp.workplane(
-            offset=-case_config.case_base_height + config.case_hole_start_from_case_bottom
+    if not config.inner_structure:
+        # Case hole
+        hole = (
+            base_wp.workplane(
+                offset=-case_config.case_base_height + config.case_hole_start_from_case_bottom
+            )
+            .center(0, config.depth - config.case_hole_depth_in_front_of_case_wall)
+            .box(
+                config.case_hole_width,
+                config.case_hole_clearance_depth,
+                case_config.case_base_height
+                - config.case_hole_start_from_case_bottom
+                - case_config.case_thickness,
+                centered=grow_yz,
+            )
         )
-        .center(0, config.depth - config.case_hole_depth_in_front_of_case_wall)
-        .box(
-            config.case_hole_width,
-            config.case_hole_clearance_depth,
-            case_config.case_base_height
-            - config.case_hole_start_from_case_bottom
-            - case_config.case_thickness,
-            centered=grow_yz,
-        )
-    )
 
     # Left rail
     rail_wp = base_wp.workplane(
@@ -92,7 +93,10 @@ def render_side_case_hole_rail(
         .extrude(1)
     )
 
-    return RenderedSideHolder(case_column=case_column, rail=rail, hole=hole, debug=debug)
+    if config.inner_structure:
+        return RenderedInnerSideHolder(case_column=case_column, rail=rail, debug=debug)
+    else:
+        return RenderedSideHolder(case_column=case_column, rail=rail, hole=hole, debug=debug)
 
 
 def render_side_mount_bracket(

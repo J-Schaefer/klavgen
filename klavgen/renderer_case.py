@@ -202,18 +202,22 @@ def render_case(
     if rendered_controller:
         case_columns = case_columns.union(rendered_controller.case_column)
         result.controller_rail = rendered_controller.rail
-        result.controller_hole = rendered_controller.hole
+        if not config.controller_config.inner_structure:
+            result.controller_hole = rendered_controller.hole
     else:
         result.controller_rail = None
-        result.controller_hole = None
+        if not config.controller_config.inner_structure:
+            result.controller_hole = None
 
     if rendered_trrs_jack:
         case_columns = case_columns.union(rendered_trrs_jack.case_column)
         result.trrs_jack_rail = rendered_trrs_jack.rail
-        result.trrs_jack_hole = rendered_trrs_jack.hole
+        if not config.controller_config.inner_structure:
+            result.trrs_jack_hole = rendered_trrs_jack.hole
     else:
         result.trrs_jack_rail = None
-        result.trrs_jack_hole = None
+        if not config.controller_config.inner_structure:
+            result.trrs_jack_hole = None
 
     result.screw_hole_rims = None
     if rendered_screw_holes:
