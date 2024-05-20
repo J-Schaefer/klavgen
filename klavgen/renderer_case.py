@@ -212,11 +212,11 @@ def render_case(
     if rendered_trrs_jack:
         case_columns = case_columns.union(rendered_trrs_jack.case_column)
         result.trrs_jack_rail = rendered_trrs_jack.rail
-        if not config.controller_config.inner_structure:
+        if not config.trrs_jack_config.inner_structure:
             result.trrs_jack_hole = rendered_trrs_jack.hole
     else:
         result.trrs_jack_rail = None
-        if not config.controller_config.inner_structure:
+        if not config.trrs_jack_config.inner_structure:
             result.trrs_jack_hole = None
 
     result.screw_hole_rims = None
