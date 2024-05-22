@@ -48,27 +48,53 @@ def render_side_case_hole_rail(
         offset=-case_config.case_base_height + case_config.case_thickness
     ).center(0, config.depth)
 
-    rail_left = (
-        rail_wp.center(-config.rail_wall_width - config.width / 2 - config.horizontal_tolerance, 0)
-        .lineTo(config.rail_wall_width, 0)
-        .lineTo(
-            config.rail_wall_width, -2 * config.horizontal_tolerance - config.holder_bracket_depth
+    if not config.inner_structure:
+        rail_left = (
+            rail_wp.center(-config.rail_wall_width - config.width / 2 - config.horizontal_tolerance, 0)
+            .lineTo(config.rail_wall_width, 0)
+            .lineTo(
+                config.rail_wall_width, -2 * config.horizontal_tolerance - config.holder_bracket_depth
+            )
+            .lineTo(
+                config.rail_wall_width + config.horizontal_tolerance + config.rail_width,
+                -2 * config.horizontal_tolerance - config.holder_bracket_depth,
+            )
+            .lineTo(
+                config.rail_wall_width + config.horizontal_tolerance + config.rail_width,
+                -2 * config.horizontal_tolerance - config.holder_bracket_depth - config.rail_wall_depth,
+            )
+            .lineTo(
+                0,
+                -2 * config.horizontal_tolerance - config.holder_bracket_depth - config.rail_wall_depth,
+            )
+            .close()
+            .extrude(case_config.case_inner_height)
         )
-        .lineTo(
-            config.rail_wall_width + config.horizontal_tolerance + config.rail_width,
-            -2 * config.horizontal_tolerance - config.holder_bracket_depth,
+    else:
+        rail_left = (
+            rail_wp.center(-config.rail_wall_width - config.width / 2 - config.horizontal_tolerance, 0)
+            .lineTo(0, config.rail_width)  # up
+            .lineTo(config.rail_wall_width + config.horizontal_tolerance + config.rail_width, config.rail_width)  # right
+            .lineTo(config.rail_wall_width + config.horizontal_tolerance + config.rail_width, 0)  # down
+            .lineTo(config.rail_wall_width, 0)
+            .lineTo(
+                config.rail_wall_width, -2 * config.horizontal_tolerance - config.holder_bracket_depth
+            )
+            .lineTo(
+                config.rail_wall_width + config.horizontal_tolerance + config.rail_width,
+                -2 * config.horizontal_tolerance - config.holder_bracket_depth,
+            )
+            .lineTo(
+                config.rail_wall_width + config.horizontal_tolerance + config.rail_width,
+                -2 * config.horizontal_tolerance - config.holder_bracket_depth - config.rail_wall_depth,
+            )
+            .lineTo(
+                0,
+                -2 * config.horizontal_tolerance - config.holder_bracket_depth - config.rail_wall_depth,
+            )
+            .close()
+            .extrude(case_config.case_inner_height)
         )
-        .lineTo(
-            config.rail_wall_width + config.horizontal_tolerance + config.rail_width,
-            -2 * config.horizontal_tolerance - config.holder_bracket_depth - config.rail_wall_depth,
-        )
-        .lineTo(
-            0,
-            -2 * config.horizontal_tolerance - config.holder_bracket_depth - config.rail_wall_depth,
-        )
-        .close()
-        .extrude(case_config.case_inner_height)
-    )
 
     # Right rail as mirror of the left rail
     center_yz_plane = rail_wp.transformed(rotate=(0, 90, 0))
